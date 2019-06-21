@@ -1,0 +1,66 @@
+apply plugin: "eclipse"
+apply plugin: "maven"
+apply plugin: "java"
+
+group = "org.yy"
+
+compileJava {
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+	options.encoding = "UTF-8"
+}
+
+compileTestJava {
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+	options.encoding = "UTF-8"
+	options.compilerArgs += "-parameters"
+}
+
+compileJava.options*.compilerArgs = [
+	"-Xlint:serial", "-Xlint:varargs", "-Xlint:cast", "-Xlint:classfile",
+	"-Xlint:dep-ann", "-Xlint:divzero", "-Xlint:empty", "-Xlint:finally",
+	"-Xlint:overrides", "-Xlint:path", "-Xlint:processing", "-Xlint:static",
+	"-Xlint:try", "-Xlint:fallthrough", "-Xlint:rawtypes", "-Xlint:deprecation",
+	"-Xlint:unchecked", "-Xlint:-options", "-Werror"
+]
+
+compileTestJava.options*.compilerArgs = [
+	"-Xlint:serial", "-Xlint:-varargs", "-Xlint:cast", "-Xlint:classfile",
+	"-Xlint:dep-ann", "-Xlint:divzero", "-Xlint:empty", "-Xlint:finally",
+	"-Xlint:overrides", "-Xlint:path", "-Xlint:processing", "-Xlint:static",
+	"-Xlint:try", "-Xlint:-fallthrough", "-Xlint:-rawtypes", "-Xlint:-deprecation",
+	"-Xlint:-unchecked", "-Xlint:-options"]
+	
+repositories {
+	mavenLocal()
+    mavenCentral()
+	maven { url "http://maven.aliyun.com/nexus/content/groups/public/"}
+}
+
+dependencies {
+    compile(
+    	'org.slf4j:slf4j-api:1.7.26',
+    	'ch.qos.logback:logback-classic:1.2.3',
+    
+    	'org.apache.httpcomponents:httpclient:4.5.9',
+    	'org.apache.httpcomponents:httpmime:4.5.9',
+    	
+    	'org.apache.commons:commons-lang3:3.9',
+    	'org.apache.commons:commons-collections4:4.3',
+
+		'org.springframework:spring-core:4.3.24.RELEASE'    	
+	)
+
+	testCompile("junit:junit:4.12")
+}
+	
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
