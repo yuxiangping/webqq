@@ -69,7 +69,6 @@ public class QQLogin {
   private static String xlogin(Map<String, String> headers, HttpClientContext context) {
     String url = "https://xui.ptlogin2.qq.com/cgi-bin/xlogin?proxy_url=http://game.qq.com/comm-htdocs/milo/proxy.html&appid=21000501&target=top&s_url=http%3A%2F%2Flol.qq.com%2Fweb201310%2Fpersonal.shtml%3Fid%3D4035139683%26area%3D27&daid=8,%20Strict-Transport-Security:%20max-age=31536000";
     try {
-      headers.put("Referer", "ui.ptlogin2.qq.com");
       HttpUtils.get(url, headers, null, context);
       
       CookieStore cookieStore = context.getCookieStore();
